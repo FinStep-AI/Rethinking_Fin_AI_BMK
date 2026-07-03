@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rethinking Financial AI Benchmarks: From Workflow Replication to Capital–Asset Matching</title>
+    <meta name="description" content="We argue that financial AI benchmarks should evaluate capital–asset matching rather than workflow replication. A position paper proposing a finance-native benchmarking framework.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a365d;
+            --primary-light: #2c5282;
+            --accent: #2b6cb0;
+            --bg: #ffffff;
+            --bg-alt: #f7fafc;
+            --text: #1a202c;
+            --text-secondary: #4a5568;
+            --border: #e2e8f0;
+            --radius: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text);
+            line-height: 1.7;
+            background: var(--bg);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 60px 0 50px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+        }
+
+        header .subtitle {
+            font-size: 1.2rem;
+            font-weight: 400;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 20px;
+            padding: 6px 16px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        /* Authors */
+        .authors-section {
+            padding: 40px 0 30px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .authors-list {
+            font-size: 1.05rem;
+            color: var(--text);
+            margin-bottom: 16px;
+            line-height: 1.9;
+        }
+
+        .authors-list sup {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.7rem;
+        }
+
+        .affiliations {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .affiliations sup {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.7rem;
+        }
+
+        .contact {
+            margin-top: 12px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* Action Buttons */
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            padding: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: var(--radius);
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(26, 54, 93, 0.3);
+        }
+
+        .btn-outline {
+            background: white;
+            color: var(--accent);
+            border: 2px solid var(--accent);
+        }
+
+        .btn-outline:hover {
+            background: var(--bg-alt);
+            transform: translateY(-1px);
+        }
+
+        .btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Sections */
+        section {
+            padding: 40px 0;
+        }
+
+        section + section {
+            border-top: 1px solid var(--border);
+        }
+
+        h2 {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        /* Abstract */
+        .abstract p {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 1.05rem;
+            line-height: 1.85;
+            color: var(--text);
+            text-align: justify;
+        }
+
+        /* Highlights */
+        .highlights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .highlight-card {
+            background: var(--bg-alt);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+            border-left: 4px solid var(--accent);
+        }
+
+        .highlight-card h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .highlight-card p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Table of Contents */
+        .toc-list {
+            list-style: none;
+            columns: 2;
+            column-gap: 40px;
+        }
+
+        .toc-list li {
+            padding: 6px 0;
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            break-inside: avoid;
+        }
+
+        .toc-list li span.num {
+            display: inline-block;
+            width: 28px;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        /* BibTeX */
+        .bibtex-toggle {
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .bibtex-toggle:hover {
+            color: var(--primary);
+        }
+
+        .bibtex-content {
+            display: none;
+            margin-top: 16px;
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: var(--radius);
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 0.82rem;
+            line-height: 1.7;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+
+        .bibtex-content.show {
+            display: block;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-alt);
+            border-top: 1px solid var(--border);
+            padding: 30px 0;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            header {
+                padding: 40px 0 35px;
+            }
+
+            header h1 {
+                font-size: 1.6rem;
+            }
+
+            header .subtitle {
+                font-size: 1rem;
+            }
+
+            .toc-list {
+                columns: 1;
+            }
+
+            .actions {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <h1>Rethinking Financial AI Benchmarks</h1>
+        <p class="subtitle">From Workflow Replication to Capital–Asset Matching</p>
+        <span class="badge">Position Paper &middot; 2025</span>
+    </div>
+</header>
+
+<main class="container">
+    <div class="authors-section">
+        <p class="authors-list">
+            Jiacheng Lu<sup>1,2</sup>,
+            Sinuo Wang<sup>4,2</sup>,
+            Wentao Zhao<sup>5,2</sup>,
+            Rui Sun<sup>2,&dagger;</sup>,
+            Beidi Luan<sup>2</sup>,
+            Tao Song<sup>1</sup>,
+            Jing Li<sup>2</sup>,
+            Daxin Jiang<sup>2</sup>,
+            Cheng Hua<sup>1</sup>,
+            Yijia He<sup>6</sup>,
+            Weijian Wang<sup>1</sup>,
+            Qixuan Yang<sup>1</sup>,
+            Nan Li<sup>1</sup>,
+            Jun Tu<sup>1</sup>,
+            Yu Jin<sup>7</sup>,
+            Zhengze Wu<sup>1,7</sup>,
+            Haibing Guan<sup>1,&dagger;</sup>,
+            Zuo Bai<sup>2,3,&dagger;</sup>
+        </p>
+        <p class="affiliations">
+            <sup>1</sup>Shanghai Jiao Tong University &nbsp;
+            <sup>2</sup>StepFun &nbsp;
+            <sup>3</sup>Finstep &nbsp;
+            <sup>4</sup>University of Adelaide &nbsp;
+            <sup>5</sup>Tsinghua University &nbsp;
+            <sup>6</sup>Peking University &nbsp;
+            <sup>7</sup>Foresight Fund
+        </p>
+        <p class="contact">
+            <sup>&dagger;</sup>Corresponding Authors &nbsp;&middot;&nbsp;
+            Contact: hbguan@sjtu.edu.cn, baizuo@stepfun.com
+        </p>
+    </div>
+
+    <div class="actions">
+        <a href="Rethinking_Financial_AI_Benchmarks.pdf" class="btn btn-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 18 15 15"/></svg>
+            Download PDF
+        </a>
+        <a href="https://github.com/SnowFly-XUE/Rethinking_Fin_AI_BMK" class="btn btn-outline">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            GitHub
+        </a>
+    </div>
+
+    <section class="abstract">
+        <h2>Abstract</h2>
+        <p>
+            Financial AI benchmarks have multiplied faster than our agreement on what they should measure. Most inherit the shape of a human job, scoring a system on how faithfully it reproduces a legacy work product such as a research report, a valuation model, or a compliance memo. We argue this is the wrong target. The analyst's workflow is a contingent solution to human bounded cognition, limited bandwidth, and institutional control. It is an organizational technology, not the essence of finance, so a benchmark faithful to it certifies competence at the artifact rather than at the economic function the artifact was built to serve. Our position is that evaluation should be organized around that function, which we formalize as <em>capital–asset matching</em>: the alignment of capital-side demand with asset-side supply along six shared dimensions, namely return, risk, horizon, liquidity, payoff form, and constraints, under institutional restrictions. Matching is the keystone of a small set of invariant economic functions that endure as workflows change, and we develop it in full while mapping the rest under the same lens. From it we derive a finance-native framework whose three capability layers close one decision loop: understand what the capital needs, read assets by economic substance, and communicate an auditable verdict in which a justified no-match is a first-class outcome.
+        </p>
+    </section>
+
+    <section>
+        <h2>Key Contributions</h2>
+        <div class="highlights-grid">
+            <div class="highlight-card">
+                <h3>Capital–Asset Matching</h3>
+                <p>A formalization of the core economic function: aligning capital-side demand with asset-side supply along six dimensions (Return, Risk, Horizon, Liquidity, Payoff Form, Constraints).</p>
+            </div>
+            <div class="highlight-card">
+                <h3>Three-Layer Framework</h3>
+                <p>A finance-native benchmarking framework: (A) demand understanding, (B) broad asset analysis by economic substance, (C) auditable decision communication.</p>
+            </div>
+            <div class="highlight-card">
+                <h3>Asset Coverage Map</h3>
+                <p>A six-class asset taxonomy read as a coverage map rather than a label set, providing principled design for benchmark item construction.</p>
+            </div>
+            <div class="highlight-card">
+                <h3>Layered Scoring Architecture</h3>
+                <p>Four separate scoring axes — correctness, suitability, robustness, and compliance — that treat automated judges as measured instruments rather than oracles.</p>
+            </div>
+            <div class="highlight-card">
+                <h3>Empirical Probe</h3>
+                <p>Evidence via 2025–2026 results dissociation and pre-registered paired-framing experiments that workflow competence does not imply matching competence.</p>
+            </div>
+            <div class="highlight-card">
+                <h3>Research Agenda</h3>
+                <p>A prioritized research agenda covering demand elicitation, cross-asset comparability, fiduciary reasoning, and real-money evaluation safety.</p>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Paper Structure</h2>
+        <ul class="toc-list">
+            <li><span class="num">1</span> Introduction: The Benchmarking Problem in Financial AI</li>
+            <li><span class="num">2</span> Financial Workflows as Historical Artifacts of Human Constraints</li>
+            <li><span class="num">3</span> The Functional Map of Finance: What Endures When Workflows Do Not</li>
+            <li><span class="num">4</span> The Economic Core of Finance: Capital–Asset Matching</li>
+            <li><span class="num">5</span> A Finance-Native Benchmarking Framework</li>
+            <li><span class="num">6</span> Asset Taxonomy and Benchmark Coverage</li>
+            <li><span class="num">7</span> Benchmark Task Design</li>
+            <li><span class="num">8</span> Evaluation Metrics and Scoring Architecture</li>
+            <li><span class="num">9</span> Illustrative Benchmark Cases</li>
+            <li><span class="num">10</span> Empirical Probe: Does Workflow Competence Imply Matching Competence?</li>
+            <li><span class="num">11</span> Anticipated Objections</li>
+            <li><span class="num">12</span> Limitations, Risks, and Open Research Questions</li>
+            <li><span class="num">13</span> Research Agenda</li>
+            <li><span class="num">14</span> From Blueprint to Platform: A Living Benchmark Observatory</li>
+            <li><span class="num">15</span> Conclusion</li>
+            <li><span class="num">A</span> The Matching Schema: Demand, Supply, and Verdict</li>
+            <li><span class="num">B</span> The Four-Axis Scoring Rubric</li>
+            <li><span class="num">C</span> The Asset-Dossier Tool Interface</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Citation</h2>
+        <button class="bibtex-toggle" onclick="document.getElementById('bibtex').classList.toggle('show')">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            Show BibTeX
+        </button>
+        <pre class="bibtex-content" id="bibtex">@article{lu2025rethinking,
+  title={Rethinking Financial AI Benchmarks: From Workflow Replication to Capital--Asset Matching},
+  author={Lu, Jiacheng and Wang, Sinuo and Zhao, Wentao and Sun, Rui and Luan, Beidi and Song, Tao and Li, Jing and Jiang, Daxin and Hua, Cheng and He, Yijia and Wang, Weijian and Yang, Qixuan and Li, Nan and Tu, Jun and Jin, Yu and Wu, Zhengze and Guan, Haibing and Bai, Zuo},
+  year={2025}
+}</pre>
+    </section>
+</main>
+
+<footer>
+    <div class="container">
+        <p>If you identify papers relevant to this position paper that have not been discussed, please contact us at jack111@sjtu.edu.cn.</p>
+    </div>
+</footer>
+
+</body>
+</html>
