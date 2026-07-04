@@ -184,6 +184,40 @@
             text-align: justify;
         }
 
+        /* Figure */
+        .figure-section {
+            padding: 40px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .figure-wrapper {
+            margin-top: 20px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            background: #fff;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+        }
+
+        .figure-wrapper img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .figure-caption {
+            padding: 14px 20px;
+            background: var(--bg-alt);
+            border-top: 1px solid var(--border);
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .figure-caption strong {
+            color: var(--primary);
+        }
+
         /* Highlights */
         .highlights-grid {
             display: grid;
@@ -366,6 +400,14 @@
         <p>
             Financial AI benchmarks have multiplied faster than our agreement on what they should measure. Most inherit the shape of a human job, scoring a system on how faithfully it reproduces a legacy work product such as a research report, a valuation model, or a compliance memo. We argue this is the wrong target. The analyst's workflow is a contingent solution to human bounded cognition, limited bandwidth, and institutional control. It is an organizational technology, not the essence of finance, so a benchmark faithful to it certifies competence at the artifact rather than at the economic function the artifact was built to serve. Our position is that evaluation should be organized around that function, which we formalize as <em>capital–asset matching</em>: the alignment of capital-side demand with asset-side supply along six shared dimensions, namely return, risk, horizon, liquidity, payoff form, and constraints, under institutional restrictions. Matching is the keystone of a small set of invariant economic functions that endure as workflows change, and we develop it in full while mapping the rest under the same lens. From it we derive a finance-native framework whose three capability layers close one decision loop: understand what the capital needs, read assets by economic substance, and communicate an auditable verdict in which a justified no-match is a first-class outcome.
         </p>
+    </section>
+
+    <section class="figure-section">
+        <h2>Framework Overview</h2>
+        <div class="figure-wrapper">
+            <img src="main_figure.png" alt="Capital–Asset Matching Framework: From legacy workflow replication to a finance-native benchmarking framework organized around capital-side demand understanding, broad asset analysis by economic substance, and auditable decision communication.">
+            <p class="figure-caption"><strong>Figure 1.</strong> The Capital–Asset Matching framework. Left: legacy workflow-replication benchmarks. Center: the matching predicate aligning capital-side demand with asset-side supply along six dimensions. Right: the finance-native benchmark design with layered scoring architecture.</p>
+        </div>
     </section>
 
     <section>
